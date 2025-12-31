@@ -4,7 +4,7 @@ import EventLayout from '../views/event/Layout.vue'
 import EventDetails from '../views/event/Details.vue'
 import EventRegister from '../views/event/Register.vue'
 import EventEdit from '../views/event/Edit.vue'
-import AboutView from '../views/AboutView.vue'
+import About from '../views/About.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,12 +15,13 @@ const router = createRouter({
       props: route => ({page: parseInt(route.query.page) || 1})
     },
     {
-      path: '/about',
+      path: '/about-us',
       name: 'about',
-      component: AboutView
+      component: About,
+      alias: '/about'
     },
     {
-      path: '/event/:id',
+      path: '/events/:id',
       name: 'event-layout',
       props: true, // send params as props
       component: EventLayout,
@@ -42,7 +43,17 @@ const router = createRouter({
         },
       ]
     },
-   
+    {
+      path: '/event/:id',
+      redirect: to => { 
+        return { name: 'event-layout', params: { id: to.params.id }}
+      },
+      children: [
+        { path: '', redirect: () => ({ name: 'event-details'}) },
+        { path: 'register', redirect: () => ({ name: 'event-register'}) },
+        { path: 'edit', redirect: () => ({ name: 'event-edit'}) },
+      ]
+    }
   ],
 })
 
