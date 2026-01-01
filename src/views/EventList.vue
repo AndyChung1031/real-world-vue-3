@@ -2,12 +2,14 @@
 import EventCard from '@/components/EventCard.vue'
 import EventService from '@/services/EventService'
 import { onMounted, ref, watch, computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps(["page"])
 
 const events = ref(null);
 const perPage = 2;
 const totalEvents = ref(0)
+const router = useRouter()
 
 const hasNextPage = computed(()=> {
   return totalEvents.value > props.page * perPage
@@ -20,7 +22,7 @@ const fetchEvents = ()=>{
     totalEvents.value = response.headers["x-total-count"]
   })
   .catch((error) => {
-    console.log(error)
+    router.push({ name: 'network-error'})
   })
 }
 
