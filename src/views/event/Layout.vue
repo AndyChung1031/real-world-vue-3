@@ -3,13 +3,13 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import EventService from '@/services/EventService'
 
-const props = defineProps({
+const props = defineProps({ // using javascript
   id: {
     required: true,
   },
 })
 
-// // if typescript is used..
+// // if typescript is used.. access by props.id in template
 // const props = defineProps<{
 //   id: number
 // }>({
