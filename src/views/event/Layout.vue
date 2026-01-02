@@ -10,14 +10,10 @@ const props = defineProps({ // using javascript
 })
 
 // // if typescript is used.. access by props.id in template
+// // id: means required, id?: means optional
 // const props = defineProps<{
 //   id: number
-// }>({
-//   id: {
-//     type: Number,
-//     required: true,
-//   },
-// })
+// }>()
 
 const event = ref(null)
 
