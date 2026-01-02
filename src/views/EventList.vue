@@ -1,22 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import EventCard from '@/components/EventCard.vue'
 import EventService from '@/services/EventService'
 import { onMounted, ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-const props = defineProps(["page"])
+const props = defineProps<{
+  page: number | string // query params is a string
+}>()
+const page = computed(() => Number(props.page))
 
-const events = ref(null);
+const events = ref<any[] | null>(null)
+const totalEvents = ref<number>(0)
 const perPage = 2;
-const totalEvents = ref(0)
 const router = useRouter()
 
 const hasNextPage = computed(()=> {
-  return totalEvents.value > props.page * perPage
+  return totalEvents.value > page.value * perPage // page is a computed property use .value
 })
 
 const fetchEvents = ()=>{
-  EventService.getEvents(perPage, props.page)
+  EventService.getEvents(perPage, page.value)
   .then((response)=> {
     events.value = response.data;
     totalEvents.value = response.headers["x-total-count"]
@@ -31,7 +34,7 @@ onMounted(()=>{
 });
 
 watch(
-  () => props.page,
+  () => page.value,
   () => {
     events.value = null
     fetchEvents()

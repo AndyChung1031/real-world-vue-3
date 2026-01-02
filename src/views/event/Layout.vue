@@ -9,6 +9,16 @@ const props = defineProps({
   },
 })
 
+// // if typescript is used..
+// const props = defineProps<{
+//   id: number
+// }>({
+//   id: {
+//     type: Number,
+//     required: true,
+//   },
+// })
+
 const event = ref(null)
 
 const router = useRouter()
